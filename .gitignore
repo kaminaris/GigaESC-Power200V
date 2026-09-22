@@ -1,0 +1,47 @@
+# Production and visualization outputs
+production/
+Render/
+ibom.html
+replicate_layout.log
+fabrication-toolkit-options.json
+*.f3z
+*.pcb3d
+*.stl
+*.blend
+*.gltf
+*.obj
+
+# 3D models: exports are regenerable, but keep models the PCB references
+*.step
+*.wrl
+!HDR-TH_20P-P1.00-V-F-R2-C10-S1.00.step
+
+# Local editor state, locks, caches and recovery files
+.idea/
+.vscode/
+*.kicad_prl
+*.lck
+~*.lck
+*.000
+*.bak
+*.bck
+*.kicad_pcb-bak
+*.kicad_sch-bak
+*.sch-bak
+*-backups/
+*~
+_autosave-*
+\#auto_saved_files\#
+*.tmp
+*-save.pro
+*-save.kicad_pcb
+fp-info-cache
+
+# Regenerable netlists and autorouter exchange files
+*.net
+*.dsn
+*.ses
+
+# Exported BOM files
+*.xml
+*.csv
