@@ -4,8 +4,6 @@ Compact 50 × 20 mm non-isolated power-supply module for the modular GigaESC pla
 
 ## Board views
 
-AI-generated photorealistic visualizations based on the PCB renders. Refer to the KiCad files for exact geometry.
-
 ![GigaPower200V front view](docs/images/gigapower200v-front-render.png)
 
 ![GigaPower200V back view](docs/images/gigapower200v-back-render.png)
