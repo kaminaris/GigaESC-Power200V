@@ -1,91 +1,37 @@
-# DevKitX2-Castellated6L
+# GigaPower200V
 
-Compact KiCad-based logic board for a VESC compute module interface.
+Compact 50 × 20 mm non-isolated power-supply module for the modular GigaESC platform, intended for the 200 V version. Provides 12 V, 5 V and 3.3 V rails through a separate output connector.
 
-![Front view](./pic-front.png)
-![Back view](./pic-back.png)
+## Board views
 
-## Compute-module concept
+AI-generated photorealistic visualizations based on the PCB renders. Refer to the KiCad files for exact geometry.
 
-This project is intentionally a **compute module** for VESC-based designs: the module carries the critical control electronics (MCU, sensing interface, comms, timing, and core protection/control signals), while the high-power stage is implemented on a separate power board.
+![GigaPower200V front view](docs/images/gigapower200v-front-render.png)
 
-The goal is to make custom VESC power-stage design easier and faster: reuse this proven logic module, then adapt only the power-board-specific hardware and firmware parameters.
+![GigaPower200V back view](docs/images/gigapower200v-back-render.png)
 
-## Project status
+## Hardware
 
-- **Schematic revision:** `V1.1.0`
-- **Top sheet date:** `2025-11-01`
-- **KiCad format:** v10 (`generator_version "10.0"`)
+- TL494 PWM controller, IR2181 gate driver and TL431 reference circuitry.
+- Two AP63356DV buck regulators for the lower-voltage rails.
+- Two 2×10 connectors separating input and output connections.
+- Common ground between input and outputs; no galvanic isolation.
 
-## Hardware summary
+## Connector summary
 
-| Item | Value |
-|---|---|
-| Board outline | 20 mm x 20 mm |
-| PCB thickness | 1.5984 mm |
-| Copper layers | 6 (`F.Cu`, `In1.Cu`, `In2.Cu`, `In3.Cu`, `In4.Cu`, `B.Cu`) |
-| Surface finish | ENIG |
-| Solder mask color | Green |
-| Main MCU | `STM32F405RGT6` |
-| Main interface connector | `J4` / `X3.0CH-Library:X3.0-CH` |
-| Main mating footprint | `X3.0CH-Library:X3.0CH-Master` |
+| Connector | Pins | Signal |
+|---|---|---|
+| J1 input | 3, 5 | VIN |
+| J1 input | 17–20 | GND |
+| J2 output | 3, 4 | 12 V |
+| J2 output | 7, 8 | 5 V |
+| J2 output | 11, 12 | 3.3 V |
+| J2 output | 1, 2, 5, 6, 9, 10, 13–16, 19, 20 | GND |
 
-## Main castellated footprint pinout (J4)
+Remaining connector pins are unconnected in the schematic. Use the current schematic as the authoritative pinout.
 
-Pin map below is the authoritative interface mapping used by this project (`X3.0CH-Library.kicad_sym`, symbol `X3.0-CH`).
+## Project
 
-| Pin | Signal | Pin | Signal |
-|---|---|---|---|
-| 1 | `POWER_STAGE_DISABLE` | 26 | `USBD+` |
-| 2 | `POWER_STAGE_LOCKOUT` | 27 | `USBD-` |
-| 3 | `GND` | 28 | `GND` |
-| 4 | `IN-V` | 29 | `CANL` |
-| 5 | `HALL-VCC` | 30 | `CANH` |
-| 6 | `HALL1` | 31 | `GND` |
-| 7 | `HALL2` | 32 | `MOSI` |
-| 8 | `HALL3` | 33 | `MISO/ADC2` |
-| 9 | `TEMP-MOTOR` | 34 | `SCK/ADC` |
-| 10 | `GND` | 35 | `NSS` |
-| 11 | `3.3V` | 36 | `VSENSE1` |
-| 12 | `5V` | 37 | `CURRENT1` |
-| 13 | `GND` | 38 | `L1` |
-| 14 | `DIO` | 39 | `H1` |
-| 15 | `CLK` | 40 | `TEMP1` |
-| 16 | `GND` | 41 | `VSENSE2` |
-| 17 | `U1-TX` | 42 | `CURRENT2` |
-| 18 | `U1-RX` | 43 | `L2` |
-| 19 | `RESERVED1` | 44 | `H2` |
-| 20 | `NRST` | 45 | `TEMP2` |
-| 21 | `SERVO` | 46 | `VSENSE3` |
-| 22 | `U3-RX` | 47 | `CURRENT3` |
-| 23 | `U3-TX` | 48 | `L3` |
-| 24 | `RESERVED2` | 49 | `H3` |
-| 25 | `RESERVED3` | 50 | `TEMP3` |
+Open `GigaPower200V.kicad_pro` in KiCad 10. Schematic and layout are in `GigaPower200V.kicad_sch` and `GigaPower200V.kicad_pcb`. Local libraries are included; keep the connector STEP model alongside the project.
 
-## Interface highlights
-
-- **Power rails:** `+5V`, `+3.3V`, `+3.3REF`, `GND`
-- **CAN:** `CAN TX`, `CAN RX`, `IN-CANH`, `IN-CANL`
-- **Debug/programming:** `SWDIO`, `SWCLK`, `NRST`
-- **USB data:** `USBD+`, `USBD-`
-- **Comms/control:** `ESP-TX`, `ESP-RX`, `SERVO`
-- **Sensors/analog:** `HALL1/2/3`, `TEMPMOTOR`, `VSENSE1/2/3`, `CURR1/2/3 FILTERED`
-- **Digital interface:** `SPI1-MOSI`, `SPI1-MISO-ADC2`, `SPI1-SCK-ADC`, `SPI1-NSS`
-- **I2C/UART muxed lines:** `I2C2 SDA/USART3 RX`, `I2C2 SCL/USART3 TX`
-
-## BLDC firmware config for custom power boards
-
-`bldc-config\` contains the VESC hardware config template used with this module:
-
-- `hw_giga_devkit_xkb_v3.h`
-- `hw_giga_devkit_xkb_v3.c`
-
-These values are **not final for every design**. When you create a new power board, you should update divider ratios, current-sense parameters, thermal constants, limits, and related mappings to match your hardware.
-
-See the **[BLDC/VESC config adaptation guide](./bldc-config/VESC-CONFIG-GUIDE.md)** for the modification workflow and which parameters must be reviewed.
-
-## Opening the project
-
-1. Open KiCad 10.
-2. Open `DevKitX2-Castellated6L.kicad_pro`.
-3. If needed, update symbol/footprint library paths so local `X3.0CH-Library` entries resolve.
+The project name describes the intended voltage class, not a measured operating limit. Input range, output loading and thermal performance require hardware validation. The inherited `LM5164_DESIGN.md` describes an earlier design and is not documentation for the current TL494 implementation.
