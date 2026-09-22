@@ -76,7 +76,20 @@
           "width": 0.0
         }
       ],
-      "drc_exclusions": [],
+      "drc_exclusions": [
+        [
+          "lib_footprint_mismatch|143100000|87200000|8fc1a6d6-e835-47e2-8e23-f69709f5598c|00000000-0000-0000-0000-000000000000",
+          ""
+        ],
+        [
+          "silk_over_copper|159790000|90279999|84292085-5fa3-4e95-9e28-b8e7ca93a265|3042a98e-dd76-445d-bd02-6a55759c087b",
+          ""
+        ],
+        [
+          "silk_over_copper|159790000|90815000|84292085-5fa3-4e95-9e28-b8e7ca93a265|189c3cb7-5943-442d-998b-db6ee40b4422",
+          ""
+        ]
+      ],
       "meta": {
         "version": 2
       },
@@ -789,7 +802,7 @@
         "uuid": "0468a8f0-6992-48fb-8a0a-32fabb565718"
       }
     ],
-    "used_designators": "U1-6,U9,L1,L3-5,#PWR1-36,#PWR64,#PWR67,#PWR69-72,#FLG1-5,#FLG8,R1-16,R19-31,H1-2,TP1-3,C1-3,C8-27,C30-31,C35-37,C41-42,J2-3,D1-7,Q1-4",
+    "used_designators": "U1-6,U9,L1,L3-5,#PWR1-36,#PWR64,#PWR67,#PWR69-72,#PWR216,#PWR301,#FLG1-5,#FLG8,R1-16,R19-31,H1-2,TP1-3,C1-3,C8-27,C30-31,C35-37,C41-42,J2-3,D1-7,Q1-4",
     "variants": []
   },
   "sheets": [
